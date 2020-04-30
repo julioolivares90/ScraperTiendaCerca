@@ -1,0 +1,77 @@
+"""
+if result.status_code == 200:
+    dt = json.loads(result.content)
+    print(dt['candidates'][0]['geometry']['location'])
+    print(dt['candidates'][0]['geometry']['viewport'])
+    pass
+
+data = {
+	"center" : {
+	"lat": 13.9259486,
+	"lag":  -89.84113819999999
+	},
+	"zoom" : 10,
+	"country_code": "sv",
+	"east": -89.8150349,
+	"north": 13.9537264,	
+  "south": 13.9044087,
+  "west":  -89.8722839
+
+}
+
+"""
+
+#result = requests.get("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={0}&inputtype=textquery&fields=formatted_address,name,geometry&key={1}".format(lugar,API_KEY))
+
+    """
+	forma mala de recorrer los datos
+    for k,d in dep.items():
+        #print('{0}-{1}'.format(k,d))
+        for de in d:
+            print(de['nombre'])
+            for municipioName in de['municipios']:
+                
+                print(municipioName)
+                pass
+            pass
+        #print(d[k])
+        #lugar = FindPlace(d[k],API_KEY)
+        pass
+    """
+
+
+	for key, value in dt.items():
+        print("{0} -{1}".format(key, value['title']))
+        #print("{0} - {1}".format(key,value))
+        pass
+
+"""
+def InicioPrograma(departamentos):
+    departamentosArray = departamentos['departamentos']
+    # recorre cada departamento
+    for departamento in departamentosArray:
+        #print("nombre : {0}".format(departamento['nombre']))
+        # recorre cada municipio
+        for municipio in departamento['municipios']:
+            #print('municipio : {0}'.format(municipio))
+            # busca un municipio y obtiene sus datos
+            dt = FindPlace('{0}, {1}'.format(municipio,departamento['nombre']), API_KEY)
+            da = {
+                "center": {
+                    "lat": dt['candidates'][0]['geometry']['location']['lat'],
+                    "lag": dt['candidates'][0]['geometry']['location']['lng']
+                },
+                "zoom": 10,
+                "country_code": "sv",
+                "east": dt['candidates'][0]['geometry']['viewport']['northeast']['lng'],
+                "north": dt['candidates'][0]['geometry']['viewport']['northeast']['lat'],
+                "south": dt['candidates'][0]['geometry']['viewport']['southwest']['lat'],
+                "west": dt['candidates'][0]['geometry']['viewport']['southwest']['lng']
+            }
+            #eviar las coordenadas al server de tiendacerca y obtine los la lista de todas las tienda de un municipio
+            datos_tiendas = GetDataStores(da)
+            WriteDataIntoFile(datos_tiendas)
+            pass
+        pass
+    pass
+"""
