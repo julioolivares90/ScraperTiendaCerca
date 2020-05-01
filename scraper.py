@@ -87,7 +87,8 @@ def inicio_programa(departamentos, numero_departamento):
             # se encarga de escribir todas las tiendas que encuentre para un municipio
             Write_data_into_file(
                 departamentos_array['nombre'], municipio, datos_tiendas)
-        except print('no se encontraron datos'):
+        except IndexError:
+            print('index fuera de rango')
             pass
 
         pass
@@ -98,7 +99,7 @@ def inicio_programa(departamentos, numero_departamento):
 
 def Write_data_into_file(nombre_departamento, nombre_municipio, datos_tiendas):
     # se convertiran en los datos de las filas del excel
-    """
+    
     departamentosName = []
     municipioName = []
     ids = []
@@ -109,14 +110,14 @@ def Write_data_into_file(nombre_departamento, nombre_municipio, datos_tiendas):
     codes = []
     lats = []
     lngs = []
-    """
-   # write = ExcelWriter(NAME_FILE_EXCEL)
+    
+    write = ExcelWriter(NAME_FILE_EXCEL)
     # print('procesando  {0} items.....'.format(len(datos_tiendas.items())))
 
     for key, dt in datos_tiendas.items():
         # df = pd.read_excel(NOMBRE_EXCEL,sheet_name='Hoja 1')
         # print(dt)
-        """"
+        
         departamentosName.append(nombre_departamento)
         municipioName.append(nombre_municipio)
         ids.append(key)
@@ -129,17 +130,17 @@ def Write_data_into_file(nombre_departamento, nombre_municipio, datos_tiendas):
         lngs.append(dt['lng'])
 
         print('{0}---{1}'.format(key, dt['title']))
-        """
-        verificar_archivo(NAME_FILE_EXCEL, data=dt,
-                          departamento_name=nombre_departamento, municipio_name=nombre_municipio)
+        
+        #verificar_archivo(NAME_FILE_EXCEL, data=dt,
+                         # departamento_name=nombre_departamento, municipio_name=nombre_municipio)
         pass
-    """
-            df = pd.DataFrame({'departamento': departamentosName,
+    
+    df = pd.DataFrame({'departamento': departamentosName,
                                 'municipio': municipioName, 'id': ids, 'title': titles, 'address': address, 'phone': phones, 'country_code': country_codes, 'code': codes, 'lat': lats, 'lng': lngs})
-            df.to_excel(write,'Hoja 1',index=False)
-            write.save()
-            print('tarea completada')
-    """
+    df.to_excel(write,'Hoja 1',index=False)
+    write.save()
+    print('tarea completada')
+    
     pass
 # imprime el menu de departamentos
 
@@ -195,12 +196,15 @@ if __name__ == "__main__":
     print('programa iniciado  obteniendo datos')
     dep = GetDepartamentos()
     print('----------------------------------Incio Programa Datos Tienda Cerca------------------------------------------')
-    inprimir_nombre_departamento(dep)
+    #imprime la lista de lo departamentos
+    #inprimir_nombre_departamento(dep)
     seguir = False
 
-    numero_departamento = int(
-        input('escribe el numero del municiipio que deseas obtener sus datos: '))
-
-    inicio_programa(dep, numero_departamento)
+    #numero_departamento = int(input('escribe el numero del municiipio que deseas obtener sus datos: '))
+    #for para recorrer 14 numeros que son los departamentos
+    for numero_departamento in range(14):
+        print('procesando : {0}'.format(dep['departamentos'][numero_departamento]['nombre']))
+        inicio_programa(dep,numero_departamento)
+        pass
     print('finalizo el programa')
     pass
